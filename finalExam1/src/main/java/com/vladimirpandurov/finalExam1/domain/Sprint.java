@@ -17,7 +17,7 @@ public class Sprint {
     private Long id;
     private String name;
     private Integer points;
-    @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Task> tasks = new ArrayList<>();
 
     public void deleteTask(Task task){

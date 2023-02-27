@@ -18,9 +18,9 @@ public class Task {
     private String name;
     private String subscriber;
     private Integer points;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Sprint sprint;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private State state;
 
     public void setSprint(Sprint sprint){
