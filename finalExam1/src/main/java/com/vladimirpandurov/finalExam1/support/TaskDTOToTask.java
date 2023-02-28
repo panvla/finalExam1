@@ -7,7 +7,9 @@ import com.vladimirpandurov.finalExam1.dto.TaskDTO;
 import com.vladimirpandurov.finalExam1.service.SprintService;
 import com.vladimirpandurov.finalExam1.service.StateService;
 import com.vladimirpandurov.finalExam1.service.TaskService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TaskDTOToTask implements Converter<TaskDTO, Task> {
 
     private final TaskService taskService;
@@ -26,13 +29,16 @@ public class TaskDTOToTask implements Converter<TaskDTO, Task> {
     public Task convert(TaskDTO dto) {
         Task task = new Task();
         State state = stateService.findOne(dto.getStateId());
+        log.info("uzimanje State " + state);
         Sprint sprint = sprintService.findOne(dto.getSprintId());
-
+        log.info("uzimanje Sprinta " + sprint);
+        task.setId(dto.getId());
         task.setName(dto.getName());
         task.setSubscriber(dto.getSubscriber());
         task.setPoints(dto.getPoints());
         task.setSprint(sprint);
         task.setState(state);
+        log.info("da vidimo kako izgleda task " + task);
         return task;
     }
 

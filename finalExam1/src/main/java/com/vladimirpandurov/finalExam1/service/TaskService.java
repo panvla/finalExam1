@@ -10,6 +10,7 @@ import com.vladimirpandurov.finalExam1.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class TaskService {
 
     private final TaskRepository taskRepository;
@@ -30,14 +32,43 @@ public class TaskService {
         return this.taskRepository.findAll(PageRequest.of(pageNum,10));
     }
 
+
     public Task save(Task task){
         Task savedTask = this.taskRepository.save(task);
         if(savedTask != null){
             Sprint sprint = savedTask.getSprint();
-            sprint.setPoints(sprint.getPoints() + savedTask.getPoints());
+            Integer totalPoints = 0;
+            for(Task taskAdd : sprint.getTasks()){
+                totalPoints += taskAdd.getPoints();
+            }
+            sprint.setPoints(totalPoints);
             this.sprintRepository.save(sprint);
+
+
         }
         return savedTask;
+    }
+
+
+    public Task update(Task task){
+        Task existingTask = taskRepository.findById(task.getId()).orElse(null);
+        if(existingTask != null){
+            existingTask.setName(task.getName());
+            existingTask.setSubscriber(task.getSubscriber());
+            existingTask.setPoints(task.getPoints());
+            existingTask.setState(task.getState());
+            existingTask.setSprint(task.getSprint());
+            Task savedTask = taskRepository.save(existingTask);
+//            Sprint sprint = savedTask.getSprint();
+//            Integer totalPoints = 0;
+//            for(Task taskAdd : sprint.getTasks()){
+//                totalPoints += taskAdd.getPoints();
+//            }
+//            sprint.setPoints(totalPoints);
+//            this.sprintRepository.save(sprint);
+            return savedTask;
+        }
+        return task;
     }
 
     public void delete(Long id){

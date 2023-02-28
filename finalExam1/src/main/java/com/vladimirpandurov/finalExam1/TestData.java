@@ -7,16 +7,20 @@ import com.vladimirpandurov.finalExam1.service.SprintService;
 import com.vladimirpandurov.finalExam1.service.StateService;
 import com.vladimirpandurov.finalExam1.service.TaskService;
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class TestData {
 
     private final SprintService sprintService;
     private final StateService stateService;
     private final TaskService taskService;
+
 
     @PostConstruct
     public void init(){
@@ -37,41 +41,44 @@ public class TestData {
         state.setName("Start");
         this.stateService.save(state);
         state = new State();
-        state.setName("25% Done");
+        state.setName("25%");
         this.stateService.save(state);
         state = new State();
-        state.setName("50% Done");
+        state.setName("50%");
         this.stateService.save(state);
         state = new State();
-        state.setName("75% Done");
+        state.setName("75%");
         this.stateService.save(state);
         state = new State();
         state.setName("Finished");
         this.stateService.save(state);
 
-        Task task = new Task();
-        task.setName("Create Project");
-        task.setSubscriber("Peter Schift");
-        task.setPoints(5);
-        task.setState(stateService.findOne(1L));
-        task.setSprint(sprintService.findOne(1L));
-        taskService.save(task);
 
-        task = new Task();
-        task.setName("Update Project");
-        task.setSubscriber("Duglas Schmith");
-        task.setPoints(10);
-        task.setState(stateService.findOne(2L));
-        task.setSprint(sprintService.findOne(1L));
-        taskService.save(task);
+//        Task task = new Task();
+//        task.setName("Create Project");
+//        task.setSubscriber("Peter Schift");
+//        task.setPoints(5);
+//        task.setState(stateService.findOne(1L));
+//        task.setSprint(sprintService.findOne(1L));
+//        taskService.save(task);
+//
+//        task = new Task();
+//        task.setName("Update Project");
+//        task.setSubscriber("Duglas Schmith");
+//        task.setPoints(10);
+//        task.setState(stateService.findOne(2L));
+//        task.setSprint(sprintService.findOne(1L));
+//        taskService.save(task);
+//
+//        task = new Task();
+//        task.setName("Add some stuff");
+//        task.setSubscriber("John Doe");
+//        task.setPoints(15);
+//        task.setState(stateService.findOne(3L));
+//        task.setSprint(sprintService.findOne(1L));
+//        taskService.save(task);
 
-        task = new Task();
-        task.setName("Add some stuff");
-        task.setSubscriber("John Doe");
-        task.setPoints(15);
-        task.setState(stateService.findOne(3L));
-        task.setSprint(sprintService.findOne(1L));
-        taskService.save(task);
+
 
     }
 
