@@ -129,7 +129,18 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onChangeState(task: Task): void {}
+  public onChangeState(task: Task): void {
+    task.stateId += 1;
+    this.taskService.updateTask(task).subscribe(
+      (response: Task) => {
+        console.log(response);
+        this.getTasks();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 
   onOpenModal(task: Task, mode: string): void {
     const container = document.getElementById('main-container');

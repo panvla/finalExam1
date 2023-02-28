@@ -28,7 +28,12 @@ public class TaskDTOToTask implements Converter<TaskDTO, Task> {
     @Override
     public Task convert(TaskDTO dto) {
         Task task = new Task();
-        State state = stateService.findOne(dto.getStateId());
+        List<State> states = stateService.findAll();
+        int stateId = Math.toIntExact(dto.getStateId());
+        if(stateId>= states.size()){
+             stateId = states.size();
+        }
+        State state = stateService.findOne((long) stateId);
         log.info("uzimanje State " + state);
         Sprint sprint = sprintService.findOne(dto.getSprintId());
         log.info("uzimanje Sprinta " + sprint);

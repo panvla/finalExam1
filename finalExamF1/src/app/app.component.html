@@ -49,7 +49,10 @@
         <td><button (click)="onOpenModal(task, 'delete')" type="button" class="btn btn-danger">Delete Task</button></td>
         <td><button (click)="onOpenModal(task, 'edit')" type="button" class="btn btn-primary">Update Task</button>
         </td>
-        <td><button (click)="onChangeState(task)" type="button" class="btn btn-success">Change State</button></td>
+        <td><button (click)="onChangeState(task)" type="button"
+            [ngClass]="task.stateName == 'Finished' ? ' disabled btn-danger': ''" class="btn btn-success">Change
+            State</button>
+        </td>
       </tr>
     </tbody>
   </table>
