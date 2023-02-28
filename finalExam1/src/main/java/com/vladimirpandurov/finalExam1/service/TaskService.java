@@ -32,21 +32,30 @@ public class TaskService {
         return this.taskRepository.findAll(PageRequest.of(pageNum,10));
     }
 
+    public Page<Task> searchAll(String taskName, Long sprintId, int pageNum){
+        return this.taskRepository.search(taskName, sprintId, PageRequest.of(pageNum, 10));
+    }
+
 
     public Task save(Task task){
+
         Task savedTask = this.taskRepository.save(task);
-        if(savedTask != null){
-            Sprint sprint = savedTask.getSprint();
-            Integer totalPoints = 0;
-            for(Task taskAdd : sprint.getTasks()){
-                totalPoints += taskAdd.getPoints();
-            }
-            sprint.setPoints(totalPoints);
-            this.sprintRepository.save(sprint);
+        updateSprint(savedTask);
 
-
-        }
         return savedTask;
+    }
+
+
+
+    public void updateSprint(Task savedTask){
+        Sprint sprint = savedTask.getSprint();
+        Integer totalPoints = 0;
+        for(Task taskAdd : sprint.getTasks()){
+            totalPoints += taskAdd.getPoints();
+        }
+        //totalPoints -= savedTask.getPoints();
+        sprint.setPoints(totalPoints);
+        this.sprintRepository.save(sprint);
     }
 
 
@@ -59,13 +68,9 @@ public class TaskService {
             existingTask.setState(task.getState());
             existingTask.setSprint(task.getSprint());
             Task savedTask = taskRepository.save(existingTask);
-//            Sprint sprint = savedTask.getSprint();
-//            Integer totalPoints = 0;
-//            for(Task taskAdd : sprint.getTasks()){
-//                totalPoints += taskAdd.getPoints();
-//            }
-//            sprint.setPoints(totalPoints);
-//            this.sprintRepository.save(sprint);
+
+            updateSprint(existingTask);
+
             return savedTask;
         }
         return task;

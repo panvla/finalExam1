@@ -24,7 +24,7 @@ public class Sprint {
     @Column(name = "points")
     private Integer points;
 
-    @OneToMany(mappedBy = "sprint", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "sprint", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
     public void deleteTask(Task task){
@@ -32,7 +32,15 @@ public class Sprint {
     }
 
     public void addTask(Task task){
-        this.tasks.add(task);
+        for(Task oneTask : tasks) {
+            if(oneTask.getId() == task.getId()){
+                tasks.remove(oneTask);
+                tasks.add(task);
+                return;
+            }
+        }
+        tasks.add(task);
+
     }
 
 }

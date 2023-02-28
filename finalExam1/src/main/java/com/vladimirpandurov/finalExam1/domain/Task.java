@@ -37,9 +37,8 @@ public class Task {
 
     public void setSprint(Sprint sprint){
         this.sprint = sprint;
-        if(!sprint.getTasks().contains(this)){
-            sprint.addTask(this);
-        }
+        sprint.addTask(this);
+
     }
 
     public void setState(State state){

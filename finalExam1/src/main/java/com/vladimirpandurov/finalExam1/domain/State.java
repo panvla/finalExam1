@@ -21,7 +21,7 @@ public class State {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "state", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
 

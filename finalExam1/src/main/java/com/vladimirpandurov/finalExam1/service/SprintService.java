@@ -20,6 +20,7 @@ public class SprintService {
         return sprintRepository.findById(id).orElseThrow(()->new SprintNotFoundException("Sprint with id " + id + " not found"));
     }
 
+
     public List<Sprint> findAll(){
         return sprintRepository.findAll();
     }

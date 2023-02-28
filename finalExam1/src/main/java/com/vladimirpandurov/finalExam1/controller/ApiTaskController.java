@@ -36,6 +36,15 @@ public class ApiTaskController {
         headers.add("totalPages", Integer.toString(taskList.getTotalPages()));
         return new ResponseEntity<>(taskToTaskDTO.convert(taskList.getContent()), headers, HttpStatus.OK);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<TaskDTO>> searchAll(@RequestParam("taskName") String taskName,
+                                                   @RequestParam("sprintId") Long sprintId,
+                                                   @RequestParam(value="pageNum", defaultValue = "0") int pageNum){
+        Page<Task> taskList = taskService.searchAll(taskName, sprintId, pageNum);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", Integer.toString(taskList.getTotalPages()));
+        return new ResponseEntity<>(taskToTaskDTO.convert(taskList.getContent()), headers, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable("id") Long id){
         Task task = taskService.findOne(id);

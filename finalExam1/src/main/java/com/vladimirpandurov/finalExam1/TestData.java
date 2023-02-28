@@ -54,29 +54,29 @@ public class TestData {
         this.stateService.save(state);
 
 
-//        Task task = new Task();
-//        task.setName("Create Project");
-//        task.setSubscriber("Peter Schift");
-//        task.setPoints(5);
-//        task.setState(stateService.findOne(1L));
-//        task.setSprint(sprintService.findOne(1L));
-//        taskService.save(task);
-//
-//        task = new Task();
-//        task.setName("Update Project");
-//        task.setSubscriber("Duglas Schmith");
-//        task.setPoints(10);
-//        task.setState(stateService.findOne(2L));
-//        task.setSprint(sprintService.findOne(1L));
-//        taskService.save(task);
-//
-//        task = new Task();
-//        task.setName("Add some stuff");
-//        task.setSubscriber("John Doe");
-//        task.setPoints(15);
-//        task.setState(stateService.findOne(3L));
-//        task.setSprint(sprintService.findOne(1L));
-//        taskService.save(task);
+        Task task = new Task();
+        task.setName("Create Project");
+        task.setSubscriber("Peter Schift");
+        task.setPoints(5);
+        task.setState(stateService.findOne(1L));
+        task.setSprint(sprintService.findOne(1L));
+        taskService.save(task);
+
+        task = new Task();
+        task.setName("Update Project");
+        task.setSubscriber("Duglas Schmith");
+        task.setPoints(10);
+        task.setState(stateService.findOne(2L));
+        task.setSprint(sprintService.findOne(1L));
+        taskService.save(task);
+
+        task = new Task();
+        task.setName("Add some stuff");
+        task.setSubscriber("John Doe");
+        task.setPoints(15);
+        task.setState(stateService.findOne(3L));
+        task.setSprint(sprintService.findOne(1L));
+        taskService.save(task);
 
 
 

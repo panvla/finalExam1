@@ -43,6 +43,30 @@ export class AppComponent implements OnInit {
     );
   }
 
+  public onSearchTasks(searchForm: NgForm): void {
+    console.log(searchForm.value.sprintId);
+    console.log(searchForm.value.taskName);
+    if (
+      searchForm.value.taskName == null &&
+      searchForm.value.sprintId == null
+    ) {
+      this.getTasks();
+    } else {
+      this.taskService
+        .searchAll(searchForm.value.taskName, searchForm.value.sprintId)
+        .subscribe(
+          (response: Task[]) => {
+            this.tasks = response;
+            searchForm.reset();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+            searchForm.reset();
+          }
+        );
+    }
+  }
+
   public onDeleteTask(): void {
     this.taskService.deleteTask(this.deleteTask.id).subscribe(
       (response: void) => {
@@ -104,6 +128,8 @@ export class AppComponent implements OnInit {
       }
     );
   }
+
+  public onChangeState(task: Task): void {}
 
   onOpenModal(task: Task, mode: string): void {
     const container = document.getElementById('main-container');
